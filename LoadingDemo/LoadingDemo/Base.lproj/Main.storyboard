@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,13 +13,57 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tXa-sH-jWL" customClass="TTLoadingView">
+                                <rect key="frame" x="67" y="115" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="xDy-Iq-X7w"/>
+                                    <constraint firstAttribute="height" constant="128" id="y8C-56-2yR"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hbk-j1-EYo">
+                                <rect key="frame" x="158" y="318" width="58" height="30"/>
+                                <state key="normal" title="Success"/>
+                                <connections>
+                                    <action selector="successAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ni8-YW-VTu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SwH-Uu-D29">
+                                <rect key="frame" x="172.5" y="388" width="30" height="30"/>
+                                <state key="normal" title="Fail"/>
+                                <connections>
+                                    <action selector="failAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2n4-To-PSj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVR-91-Es5">
+                                <rect key="frame" x="170" y="463" width="34" height="30"/>
+                                <state key="normal" title="Load"/>
+                                <connections>
+                                    <action selector="loadAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3IA-y3-fzg"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="jVR-91-Es5" firstAttribute="top" secondItem="SwH-Uu-D29" secondAttribute="bottom" constant="45" id="1eg-n6-nl6"/>
+                            <constraint firstItem="Hbk-j1-EYo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4c8-Na-jdh"/>
+                            <constraint firstItem="Hbk-j1-EYo" firstAttribute="top" secondItem="tXa-sH-jWL" secondAttribute="bottom" constant="75" id="69l-tM-0qa"/>
+                            <constraint firstItem="tXa-sH-jWL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="95" id="M6T-9h-Emu"/>
+                            <constraint firstItem="SwH-Uu-D29" firstAttribute="top" secondItem="Hbk-j1-EYo" secondAttribute="bottom" constant="40" id="N11-Fi-0jJ"/>
+                            <constraint firstItem="SwH-Uu-D29" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ONV-AF-jKF"/>
+                            <constraint firstItem="jVR-91-Es5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="czD-U4-dgj"/>
+                            <constraint firstItem="tXa-sH-jWL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jVX-f5-nyw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="loadingView" destination="tXa-sH-jWL" id="M7V-Mw-nC5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

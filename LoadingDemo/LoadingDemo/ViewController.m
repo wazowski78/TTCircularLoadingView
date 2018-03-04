@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "TTLoadingView.h"
 
 @interface ViewController ()
+//@property (weak, nonatomic) IBOutlet TTLoadingView *loadingView;
+@property (strong, nonatomic) TTLoadingView *loadingView;
 
 @end
 
@@ -16,14 +19,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    CGRect yourRect;
+    TTLoadingView *loadingView = [[TTLoadingView alloc] initWithFrame:yourRect];
+    [self.view addSubview:loadingView];
+    
+    [_loadingView startLoading];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)successAction:(id)sender {
+    [_loadingView loadSuccess];
 }
 
+- (IBAction)failAction:(id)sender {
+    [_loadingView loadFail];
+}
+
+- (IBAction)loadAction:(id)sender {
+    [_loadingView startLoading];
+}
 
 @end
