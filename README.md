@@ -8,7 +8,6 @@ Wide and high optional Settings, circular loading view will automatically match.
 
 
 # GIF视图
-<br>
 ![image](https://github.com/xushixun16/TTCircularLoadingView/blob/master/loadingView.gif)
 
 # 使用
