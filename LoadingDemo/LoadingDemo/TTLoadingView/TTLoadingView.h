@@ -2,8 +2,8 @@
 //  TTLoadingView.h
 //  coboelafs
 //
-//  Created by apple on 2018/2/22.
-//  Copyright © 2018年 liubei. All rights reserved.
+//  Created by apple on 2018/3/2.
+//  Copyright © 2018年 徐世勋. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -13,6 +13,8 @@
 @property (nonatomic, assign) CGFloat ovalWidth;
 @property (nonatomic, assign) CGFloat duration;
 @property (nonatomic, strong) UIColor *loadingColor;
+@property (nonatomic, strong) UIColor *successColor;
+@property (nonatomic, strong) UIColor *failColor;
 
 - (void)startLoading;
 - (void)stopLoading;

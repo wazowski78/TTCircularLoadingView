@@ -2,8 +2,8 @@
 //  TTLoadingView.m
 //  coboelafs
 //
-//  Created by apple on 2018/2/22.
-//  Copyright © 2018年 liubei. All rights reserved.
+//  Created by apple on 2018/3/2.
+//  Copyright © 2018年 徐世勋. All rights reserved.
 //
 
 #import "TTLoadingView.h"
@@ -100,12 +100,25 @@
 
 - (void)loadSuccess {
     [self stopLoading];
-    _bottomShapeLayer.strokeColor = [UIColor greenColor].CGColor;
+    _bottomShapeLayer.strokeColor = self.successColor.CGColor;
 }
 
 - (void)loadFail {
     [self stopLoading];
-    _bottomShapeLayer.strokeColor = [UIColor redColor].CGColor;
+    _bottomShapeLayer.strokeColor = self.failColor.CGColor;
+}
+
+- (UIColor *)successColor {
+    if (!_successColor) {
+        _successColor = [UIColor greenColor];
+    }
+    return _successColor;
+}
+- (UIColor *)failColor {
+    if (!_failColor) {
+        _failColor = [UIColor redColor];
+    }
+    return _failColor;
 }
 
 @end
