@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface TTLoadingView : UIView
-
+/** 圆弧宽度 default:7 */
 @property (nonatomic, assign) CGFloat ovalWidth;
+/** loading一圈需要的时间 default:2.5 */
 @property (nonatomic, assign) CGFloat duration;
+
 @property (nonatomic, strong) UIColor *loadingColor;
 @property (nonatomic, strong) UIColor *successColor;
 @property (nonatomic, strong) UIColor *failColor;

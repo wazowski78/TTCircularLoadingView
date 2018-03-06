@@ -12,6 +12,7 @@
 @property (nonatomic, strong) CAShapeLayer *bottomShapeLayer;
 @property (nonatomic, strong) CAShapeLayer *contentShapeLayer;
 @property (nonatomic, strong) UIBezierPath *ovalPath;
+@property (nonatomic, strong) CAAnimationGroup *animationGroup;
 @end
 
 @implementation TTLoadingView
@@ -44,33 +45,15 @@
     
     _ovalPath = [UIBezierPath bezierPathWithRoundedRect:frame cornerRadius:side/2];
     
-    if (!_ovalWidth) _ovalWidth = 7;
-    
     // 底部的灰色layer
     _bottomShapeLayer = [CAShapeLayer layer];
     _bottomShapeLayer.strokeColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
-    _bottomShapeLayer.fillColor = [UIColor clearColor].CGColor;
-    _bottomShapeLayer.lineWidth = _ovalWidth;
     _bottomShapeLayer.path = _ovalPath.CGPath;
+    _bottomShapeLayer.fillColor = [UIColor clearColor].CGColor;
     [self.layer addSublayer:_bottomShapeLayer];
-}
-
-- (void)startLoading {
-    if (!_contentShapeLayer) _contentShapeLayer = [CAShapeLayer layer];
-    if (!_loadingColor) _loadingColor = [UIColor yellowColor];
-    if (!_duration) _duration = 2.5;
-    if (!_ovalWidth) _ovalWidth = 7;
-    
-    _bottomShapeLayer.strokeColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
     
     // 添加橘黄色的layer
-    _contentShapeLayer.strokeColor = _loadingColor.CGColor;
-    _contentShapeLayer.fillColor = [UIColor clearColor].CGColor;
-    _contentShapeLayer.lineWidth = _ovalWidth;
-    _contentShapeLayer.path = _ovalPath.CGPath;
-    [self.layer addSublayer:_contentShapeLayer];
-    
-    [_contentShapeLayer removeAllAnimations];
+    [self.layer addSublayer:self.contentShapeLayer];
     
     // 起点动画
     CABasicAnimation * strokeStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
@@ -83,19 +66,30 @@
     strokeEndAnimation.toValue = @(1.0);
     
     // 组合动画
-    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.animations = @[strokeStartAnimation, strokeEndAnimation];
-    animationGroup.duration = _duration;
-    animationGroup.repeatCount = CGFLOAT_MAX;
-    animationGroup.fillMode = kCAFillModeForwards;
-    animationGroup.removedOnCompletion = NO;
-    animationGroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    [_contentShapeLayer addAnimation:animationGroup forKey:nil];
+    self.animationGroup.animations = @[strokeStartAnimation, strokeEndAnimation];
+}
+
+#pragma mark  ===============||-->  Public  <--||===============
+
+- (void)startLoading {
+    if (!_loadingColor) _loadingColor = [UIColor yellowColor];
+    if (!_duration) _duration = 2.5;
+    if (!_ovalWidth) _ovalWidth = 7;
+    
+    _bottomShapeLayer.strokeColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:0.5].CGColor;
+    _bottomShapeLayer.lineWidth = _ovalWidth;
+    self.contentShapeLayer.strokeColor = _loadingColor.CGColor;
+    self.contentShapeLayer.lineWidth = _ovalWidth;
+    [self.layer addSublayer:self.contentShapeLayer];
+    self.animationGroup.duration = _duration;
+    
+    [self.contentShapeLayer addAnimation:_animationGroup forKey:nil];
 }
 
 - (void)stopLoading {
-    [_contentShapeLayer removeAllAnimations];
-    [_contentShapeLayer removeFromSuperlayer];
+    [self.contentShapeLayer removeAllAnimations];
+    [self.contentShapeLayer removeFromSuperlayer];
+    self.contentShapeLayer = nil;
 }
 
 - (void)loadSuccess {
@@ -106,6 +100,10 @@
 - (void)loadFail {
     [self stopLoading];
     _bottomShapeLayer.strokeColor = self.failColor.CGColor;
+}
+
+- (void)setOvalWidth:(CGFloat)ovalWidth {
+    _bottomShapeLayer.lineWidth = _ovalWidth;
 }
 
 - (UIColor *)successColor {
@@ -119,6 +117,27 @@
         _failColor = [UIColor redColor];
     }
     return _failColor;
+}
+
+#pragma mark  ===============||-->  Lazy loading  <--||===============
+
+- (CAShapeLayer *)contentShapeLayer {
+    if (!_contentShapeLayer) {
+        _contentShapeLayer = [CAShapeLayer layer];
+        _contentShapeLayer.fillColor = [UIColor clearColor].CGColor;
+        _contentShapeLayer.path = _ovalPath.CGPath;
+    }
+    return _contentShapeLayer;
+}
+- (CAAnimationGroup *)animationGroup {
+    if (!_animationGroup) {
+        _animationGroup = [CAAnimationGroup animation];
+        _animationGroup.repeatCount = CGFLOAT_MAX;
+        _animationGroup.fillMode = kCAFillModeForwards;
+        _animationGroup.removedOnCompletion = NO;
+        _animationGroup.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    }
+    return _animationGroup;
 }
 
 @end

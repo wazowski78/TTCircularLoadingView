@@ -10,8 +10,8 @@
 #import "TTLoadingView.h"
 
 @interface ViewController ()
-//@property (weak, nonatomic) IBOutlet TTLoadingView *loadingView;
-@property (strong, nonatomic) TTLoadingView *loadingView;
+@property (weak, nonatomic) IBOutlet TTLoadingView *loadingView;
+//@property (strong, nonatomic) TTLoadingView *loadingView;
 
 @end
 
@@ -20,9 +20,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    /*
     CGRect yourRect;
     TTLoadingView *loadingView = [[TTLoadingView alloc] initWithFrame:yourRect];
     [self.view addSubview:loadingView];
+     */
     
     [_loadingView startLoading];
 }
